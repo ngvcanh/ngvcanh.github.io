@@ -1,0 +1,1 @@
+export const TOOLS_SOCIALS_PREVIEW = "/tools/socials-preview";
