@@ -1,17 +1,18 @@
 import { MouseEvent, PropsWithChildren, ReactNode, forwardRef } from "react";
-import { IconCaretDownFilled, TablerIconsProps } from "@tabler/icons-react";
-import clsx, { ClassValue } from "clsx";
+import { ClassValue, cx } from "@/utils/cx";
+import { NavbarIconComponent } from "@/types/base";
+import { HTMLProps } from "@/types/html";
+import { IconCaretDownFilled } from "@tabler/icons-react";
 import Link from "next/link";
-import arrayClass from "@/utils/arrayClass";
 
-export interface NavItemProps {
-  leftIcon?: (props: TablerIconsProps) => JSX.Element;
+export interface NavItemProps extends Omit<HTMLProps<HTMLLIElement>, 'className' | 'onClick'> {
+  className?: ClassValue;
+  leftIcon?: NavbarIconComponent;
   leftIconSize?: number;
   label: ReactNode;
-  className?: ClassValue | ClassValue[];
-  linkClass?: ClassValue | ClassValue[];
-  labelClass?: ClassValue | ClassValue[];
-  leftIconClass?: ClassValue | ClassValue[];
+  linkClass?: ClassValue;
+  labelClass?: ClassValue;
+  leftIconClass?: ClassValue;
   href?: string;
   onClick?(e: MouseEvent<HTMLAnchorElement>): void;
   dropdown?: boolean;
@@ -19,44 +20,42 @@ export interface NavItemProps {
 
 export const NAV_ITEM_DEFAULT_LEFT_ICON_SIZE = 16;
 
-const NavItem = forwardRef<HTMLLIElement, PropsWithChildren<NavItemProps>>(
+export const NavItem = forwardRef<HTMLLIElement, PropsWithChildren<NavItemProps>>(
   function NavItem(props, ref) {
     const {
+      children,
+      className,
+      href = "#",
+      linkClass,
       leftIcon: LeftIcon,
       leftIconSize = NAV_ITEM_DEFAULT_LEFT_ICON_SIZE,
-      label,
-      className,
-      linkClass,
-      labelClass,
       leftIconClass,
-      href = "#",
-      onClick,
+      label,
+      labelClass,
       dropdown,
-      children,
+      onClick,
+      ...rest
     } = props;
-  
+
     return (
-      <li ref={ref} className={clsx("px-2", ...arrayClass(className))}>
+      <li {...rest} ref={ref} className={cx("px-2", className)}>
         <Link
           href={href}
-          className={clsx(
-            "flex items-center gap-2 h-full cursor-pointer transition-all",
-            ...arrayClass(linkClass),
-          )}
           onClick={onClick}
+          className={cx("flex items-center gap-2 h-full cursor-pointer transition-all", linkClass)}
         >
           {!!LeftIcon && (
             <LeftIcon
               size={leftIconSize}
-              className={clsx(
+              className={cx(
                 "group-hover/item:translate-x-1 transition-all",
-                ...arrayClass(leftIconClass)
+                leftIconClass
               )}
             />
           )}
           {['string', 'number', 'object', 'boolean'].includes(typeof label)
             ? (
-              <span className={clsx("whitespace-nowrap transition-all", ...arrayClass(labelClass))}>
+              <span className={cx("whitespace-nowrap transition-all", labelClass)}>
                 {label}
               </span>
             )
@@ -67,7 +66,5 @@ const NavItem = forwardRef<HTMLLIElement, PropsWithChildren<NavItemProps>>(
         {children}
       </li>
     );
-  },
+  }
 );
-
-export default NavItem;

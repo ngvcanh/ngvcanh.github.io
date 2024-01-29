@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+
+  --app-root-header-height: 4rem;
+  --app-root-header-index: 100;
+  --app-root-sidebar-width: 15rem;
+  --app-root-sidebar-index: 99;
+  --app-root-padding: 1.5rem;
+  --app-primary-color: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  html {
+    font-size: 16px;
+  }
+
+  body, #__next {
+    @apply h-dvh w-dvw overflow-hidden text-sm box-border m-0 p-0;
+  }
+
+  header#app-root-header {
+    @apply
+      fixed
+      top-0
+      left-0
+      right-0
+      shadow-lg
+      border-b
+      z-[var(--app-root-header-index)]
+      bg-[var(--app-primary-color)]
+      h-[var(--app-root-header-height)];
+  }
+
+  aside#app-root-sidebar {
+    @apply
+      fixed
+      left-0
+      bottom-0
+      shadow-lg
+      border-r
+      z-[--app-root-sidebar-index]
+      overflow-hidden
+      bg-[var(--app-primary-color)]
+      top-[var(--app-root-header-height)]
+      w-[var(--app-root-sidebar-width)];
+  }
+
+  main#app-root-main {
+    @apply w-full h-full overflow-hidden bg-gray-200;
+  }
+
+  main#app-root-main.is-header {
+    @apply pt-[var(--app-root-header-height)];
+  }
+
+  main#app-root-main.is-header.padding {
+    @apply pt-[calc(var(--app-root-header-height)+var(--app-root-padding))];
+  }
+
+  main#app-root-main.is-sidebar {
+    @apply pl-[var(--app-root-sidebar-width)];
+  }
+
+  main#app-root-main.is-sidebar.padding {
+    @apply pl-[calc(var(--app-root-sidebar-width)+var(--app-root-padding))];
+  }
+
+  main#app-root-main.padding {
+    @apply pr-[var(--app-root-padding)] pb-[var(--app-root-padding)];
+  }
+
+  main#app-root-main>.ScrollView-root>.ScrollView-inner.padding {
+    @apply p-[var(--app-root-padding)];
+  }
+
+  .ScrollView-root {
+    @apply flex w-full h-full shrink grow-0 overflow-hidden;
+  }
+
+  .ScrollView-inner {
+    @apply w-full h-full;
+  }
+
+  .ScrollView-inner.y {
+    @apply overflow-y-auto;
+  }
+
+  .ScrollView-inner.x {
+    @apply overflow-x-auto;
+  }
+
+  .ScrollView-inner.auto {
+    @apply overflow-auto;
+  }
+}

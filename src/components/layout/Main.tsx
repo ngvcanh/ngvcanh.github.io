@@ -1,33 +1,50 @@
-import { PropsWithChildren, forwardRef } from "react";
-import { HTMLProps } from "@/types/html";
-import clsx from "clsx";
+import { FC, PropsWithChildren, RefObject } from "react";
+import { ClassValue, cx } from "@/utils/cx";
+import { ScrollView, ScrollViewProps } from "../base/ScrollView";
 
-export interface MainProps extends HTMLProps {
-  disablePadding?: boolean;
-  nav?: boolean;
+export interface MainProps {
+  id?: string;
+  className?: ClassValue;
+  header?: boolean;
+  sidebar?: boolean;
+  padding?: boolean;
+  scrollView?: boolean;
+  scrollRef?: RefObject<HTMLDivElement>;
+  scrollProps?: ScrollViewProps;
 }
 
-const Main = forwardRef<HTMLElement, PropsWithChildren<MainProps>>(
-  function Main(props, ref) {
-    const { children, className, disablePadding, nav, ...rest } = props;
+export const Main: FC<PropsWithChildren<MainProps>> = (props) => {
+  const { id, children, className, header, sidebar, padding, scrollView, scrollRef, scrollProps } = props;
 
-    return (
-      <main
-        {...{
-          ...rest,
-          ref,
-          className: clsx(
-            "pr-6 pb-6 pl-6 h-dvh w-dvw overflow-hidden text-white text-sm",
-            disablePadding ? "pt-6" : "pt-20",
-            nav && "md:pl-[19.5rem]",
-            className
-          )
-        }}
-      >
-        {children}
-      </main>
-    );
-  }
-);
+  return (
+    <main
+      id={id}
+      className={cx(
+        className,
+        header && "is-header",
+        sidebar && "is-sidebar",
+        padding && !scrollView && "padding"
+      )}
+    >
+      {scrollView
+        ? (
+          <ScrollView
+            {...scrollProps}
+            ref={scrollRef}
+            innerClass={cx(scrollProps?.innerClass, padding && "padding")}
+          >
+            {children}
+          </ScrollView>
+        )
+        : children
+      }
+    </main>
+  );
+};
 
-export default Main;
+Main.defaultProps = {
+  id: "app-root-main",
+  header: true,
+  padding: true,
+  scrollView: true,
+};
