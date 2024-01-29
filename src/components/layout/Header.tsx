@@ -1,18 +1,17 @@
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 import { IconChevronRight } from "@tabler/icons-react";
+import { NavbarItem } from "@/types/navbar";
+import { learningNavbars } from "@/app/learning/navbars";
 import clsx from "clsx";
-import NavItem, { NavItemProps } from "@/components/base/NavItem";
+import NavItem from "@/components/base/NavItem";
 import Nav from "@/components/base/Nav";
 import * as PageURL from "@/utils/PageURL";
 
-export interface NavbarItem {
-  label: ReactNode;
-  icon?: NavItemProps['leftIcon'];
-  href?: string;
-  children?: NavbarItem[];
-}
-
 const navbars: NavbarItem[] = [
+  {
+    label: "Learning",
+    children: [ ...learningNavbars ]
+  },
   {
     label: "Tools",
     children: [

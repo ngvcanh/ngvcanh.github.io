@@ -34,9 +34,6 @@ const NavItem = forwardRef<HTMLLIElement, PropsWithChildren<NavItemProps>>(
       dropdown,
       children,
     } = props;
-
-    const spanClass = Array.isArray(labelClass) ? labelClass : [labelClass];
-    const leftSvgClass = Array.isArray(leftIconClass) ? leftIconClass : [leftIconClass];
   
     return (
       <li ref={ref} className={clsx("px-2", ...arrayClass(className))}>
