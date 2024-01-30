@@ -55,7 +55,7 @@ export const NavItem = forwardRef<HTMLLIElement, PropsWithChildren<NavItemProps>
           )}
           {['string', 'number', 'object', 'boolean'].includes(typeof label)
             ? (
-              <span className={cx("whitespace-nowrap transition-all", labelClass)}>
+              <span className={cx("whitespace-nowrap transition-all tracking-wider", labelClass)}>
                 {label}
               </span>
             )

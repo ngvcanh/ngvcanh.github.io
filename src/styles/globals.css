@@ -7,12 +7,20 @@
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 
-  --app-root-header-height: 4rem;
+  --app-base-size: 1rem;
+  --app-root-header-height: 3rem;
+  --app-root-header-bg: #101e2a;
   --app-root-header-index: 100;
   --app-root-sidebar-width: 15rem;
   --app-root-sidebar-index: 99;
   --app-root-padding: 1.5rem;
   --app-primary-color: #fff;
+  --app-padding-base: var(--app-base-size);
+  --app-padding-sm: calc(0.75 * var(--app-base-size));
+  --app-padding-xs: calc(0.5 * var(--app-base-size));
+  --app-padding-md: calc(1.25 * var(--app-base-size));
+  --app-padding-lg: calc(1.5 * var(--app-base-size));
+  --app-padding-xl: calc(2 * var(--app-base-size));
 }
 
 @media (prefers-color-scheme: dark) {
@@ -26,6 +34,10 @@
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .size-full {
+    @apply w-full h-full;
   }
 }
 
@@ -47,8 +59,20 @@
       shadow-lg
       border-b
       z-[var(--app-root-header-index)]
-      bg-[var(--app-primary-color)]
+      bg-[var(--app-root-header-bg)]
       h-[var(--app-root-header-height)];
+  }
+
+  .Header-wrapper {
+    @apply flex flex-1 size-full items-center text-white;
+  }
+
+  .Header-left {
+    @apply flex items-center shrink grow-0 size-full;
+  }
+
+  .Header-leftNav {
+    @apply flex items-center h-full;
   }
 
   aside#app-root-sidebar {
@@ -66,7 +90,7 @@
   }
 
   main#app-root-main {
-    @apply w-full h-full overflow-hidden bg-gray-200;
+    @apply size-full overflow-hidden bg-gray-200;
   }
 
   main#app-root-main.is-header {
@@ -94,11 +118,11 @@
   }
 
   .ScrollView-root {
-    @apply flex w-full h-full shrink grow-0 overflow-hidden;
+    @apply flex size-full shrink grow-0 overflow-hidden;
   }
 
   .ScrollView-inner {
-    @apply w-full h-full;
+    @apply size-full;
   }
 
   .ScrollView-inner.y {
