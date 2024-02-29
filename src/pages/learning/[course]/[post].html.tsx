@@ -1,7 +1,9 @@
 import { GetServerSideProps, Metadata } from "next";
 import { PageWithLayout } from "@/types/base";
-import { LearningLayout } from "@/components/containers/LearningLayout";
 import { Main } from "@/components/layout/Main";
+import { PostContents } from "@/blog/learning/posts";
+import { HomeLayout } from "@/components/containers/HomeLayout";
+import { PostDetail } from "@/components/layout/PostDetail";
 
 export const metadata: Metadata = {
   title: "My post",
@@ -12,76 +14,17 @@ export const metadata: Metadata = {
 export interface PostProps {
   course: string;
   post: string;
+  url: string;
 }
 
 const Post: PageWithLayout<PostProps> = (props) => {
-  const { course, post } = props;
+  const { url } = props;
+
+  const Content = PostContents[url];
+
   return (
-    <Main sidebar>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
-      <div>{course} :: {post}</div>
+    <Main>
+      <PostDetail Content={Content} />
     </Main>
   );
 };
@@ -91,8 +34,9 @@ export const getServerSideProps: GetServerSideProps = (ctx) => Promise.resolve({
     ...ctx.query,
     post: (ctx.query?.post as string)?.replace(/\.html$/, ''),
     navbar: [],
+    url: ctx.resolvedUrl,
   }
 });
 
-Post.getLayout = LearningLayout;
+Post.getLayout = HomeLayout;
 export default Post;

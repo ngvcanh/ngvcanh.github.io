@@ -2,6 +2,7 @@ import { ReactElement, ReactNode } from "react";
 import { NextPage } from "next";
 import { AppProps as NextAppProps } from "next/app";
 import { TablerIconsProps } from "@tabler/icons-react";
+import { MDXProps } from "mdx/types";
 
 export interface AppLayout<P = any> {
   (page: ReactElement, pageProps: P): ReactNode;
@@ -19,6 +20,8 @@ export type AppProps = NextAppProps & {
 
 export type NavbarIconComponent = (props: TablerIconsProps) => JSX.Element;
 
+export type SizeType = "xs" | "sm" | "md" | "lg" | "xl";
+
 export interface NavbarItem {
   label: ReactNode;
   icon?: NavbarIconComponent;
@@ -26,7 +29,7 @@ export interface NavbarItem {
   children?: NavbarItem[];
 }
 
-export interface MenuItem {
+export interface PostItemInterface {
   url: string;
   name: string;
   summary?: string;
@@ -34,4 +37,7 @@ export interface MenuItem {
   description?: string;
   keywords?: string;
   image?: string;
+  category?: string;
 }
+
+export type MDXComponent = (props: MDXProps) => JSX.Element;

@@ -1,6 +1,6 @@
-import { MenuItem } from "@/types/base";
+import { PostItemInterface } from "@/types/base";
 
-export const learningMenus: MenuItem[] = [
+export const learningMenus: PostItemInterface[] = [
   {
     url: "/learning/rust",
     name: "Rust",
