@@ -1,7 +1,8 @@
 import { FC } from "react";
-import { IconChevronRight } from "@tabler/icons-react";
+import { IconChevronRight, IconHome } from "@tabler/icons-react";
 import { NavbarItem } from "@/types/base";
 import { Navbar } from "../base/Navbar";
+import Link from "next/link";
 
 export interface HeaderProps {
   id?: string;
@@ -48,6 +49,11 @@ export const Header: FC<HeaderProps> = (props) => {
   return (
     <header {...{id}} className={headerClasses.root}>
       <div className={headerClasses.wrapper}>
+        <div className="h-full">
+          <Link href="/" className="flex items-center h-full px-3 border-r border-slate-700 cursor-pointer hover:bg-slate-700 transition-all">
+            <IconHome />
+          </Link>
+        </div>
         <Navbar
           navbar={navbars}
           className={[headerClasses.left, "px-4"]}

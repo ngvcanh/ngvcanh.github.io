@@ -6,7 +6,8 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
-
+  
+  --app-bg-body-rgb: 21, 34, 46;
   --app-base-size: 1rem;
   --app-root-header-height: 3rem;
   --app-root-header-bg: #101e2a;
@@ -58,6 +59,7 @@
       right-0
       shadow-lg
       border-b
+      border-slate-800
       z-[var(--app-root-header-index)]
       bg-[var(--app-root-header-bg)]
       h-[var(--app-root-header-height)];
@@ -90,7 +92,7 @@
   }
 
   main#app-root-main {
-    @apply size-full overflow-hidden bg-gray-200;
+    @apply size-full overflow-hidden  bg-[rgb(var(--app-bg-body-rgb))];
   }
 
   main#app-root-main.is-header {
@@ -135,5 +137,9 @@
 
   .ScrollView-inner.auto {
     @apply overflow-auto;
+  }
+
+  .PostItem-root {
+    @apply flex;
   }
 }

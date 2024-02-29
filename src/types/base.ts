@@ -25,3 +25,13 @@ export interface NavbarItem {
   href?: string;
   children?: NavbarItem[];
 }
+
+export interface MenuItem {
+  url: string;
+  name: string;
+  summary?: string;
+  title?: string;
+  description?: string;
+  keywords?: string;
+  image?: string;
+}
