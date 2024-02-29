@@ -1,10 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { PostItemInterface } from "@/types/base";
-import { api } from "@/utils/api";
 import { getCourses } from "@/utils/getCourse";
 
-export function fetchCourses() {
-  return fetch(api.courses).then(rs => rs.json());
+export function fetchCourses(url: string) {
+  return fetch(url).then(rs => rs.json());
 }
 
 export default async function handler(

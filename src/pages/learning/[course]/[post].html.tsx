@@ -3,7 +3,7 @@ import { PageWithLayout, PostItemInterface } from "@/types/base";
 import { Main } from "@/components/layout/Main";
 import { HomeLayout } from "@/components/containers/HomeLayout";
 import { PostDetail } from "@/components/layout/PostDetail";
-import { api } from "@/utils/api";
+import { api, getApiUrl } from "@/utils/api";
 import useSWR from "swr";
 import { fetchPostDetail } from "@/pages/api/courses/[course]/[post]";
 // import { getPost } from "@/utils/getPost";
@@ -20,31 +20,37 @@ export interface PostProps {
   url: string;
 }
 
+const getApiPostDetail = (course: string, post: string) => getApiUrl(`${api.courses}/${course}/${post}`);
+
 const Post: PageWithLayout<PostProps> = (props) => {
   const { course, post } = props;
-  const apiUrl = `${api.courses}/${course}/${post}`;
-  const { data } = useSWR<PostItemInterface>(apiUrl, fetchPostDetail);
+  const apiPostDetail = getApiPostDetail(course, post);
+  const { data } = useSWR<PostItemInterface>(apiPostDetail, fetchPostDetail);
 
-//   console.log(PostContents);
-
-//   const Content = PostContents[url];
-// console.log(Content);
   return (
     <Main>
-      <PostDetail post={post} course={course} />
+      <PostDetail post={data!} />
     </Main>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  return Promise.resolve({
+  const { query, resolvedUrl } = ctx;
+
+  const apiPostDetail = getApiPostDetail(query?.course as string, query?.post as string);
+  const postDetail = await fetchPostDetail(apiPostDetail);
+
+  return {
     props: {
-      ...ctx.query,
-      post: (ctx.query?.post as string)?.replace(/\.html$/, ''),
+      ...query,
+      post: (query?.post as string)?.replace(/\.html$/, ''),
       navbar: [],
-      url: ctx.resolvedUrl,
+      url: resolvedUrl,
+      fallback: {
+        [apiPostDetail]: postDetail,
+      }
     }
-  })
+  };
 };
 
 Post.getLayout = HomeLayout;

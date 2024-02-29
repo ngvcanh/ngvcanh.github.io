@@ -1,10 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { PostItemInterface } from "@/types/base";
-import { api } from "@/utils/api";
 import { getPostsByCategory } from "@/utils/getPostsByCategory";
 
-export async function fetchPostsByCategory() {
-  return fetch(api.postsByCategory).then(rs => rs.json());
+export async function fetchPostsByCategory(url: string) {
+  return fetch(url).then(rs => rs.json());
 }
 
 type CourseByCategory = Record<string, PostItemInterface[]>;

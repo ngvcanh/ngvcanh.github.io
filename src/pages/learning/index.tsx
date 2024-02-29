@@ -1,19 +1,18 @@
 import { PageWithLayout, PostItemInterface } from "@/types/base";
 import { fetchPostsByCategory } from "@/pages/api/posts/category";
 import { fetchCourses } from "@/pages/api/courses";
-import { api } from "@/utils/api";
+import { api, getApiUrl } from "@/utils/api";
 import { Main } from "@/components/layout/Main";
 import { HomeLayout } from "@/components/containers/HomeLayout";
-import { CategoryPost } from "@/components/layout/CategoryPost";
 import useSWR from "swr";
-import { GetServerSideProps } from "next";
-import { getPostsByCategory } from "@/utils/getPostsByCategory";
+import { CategoryPost } from "@/components/layout/CategoryPost";
+
+const apiCourses = getApiUrl(api.courses);
+const apiPosts = getApiUrl(api.postsByCategory);
 
 const Learning: PageWithLayout = () => {
-  const { data: courses } = useSWR<PostItemInterface[]>(api.courses, fetchCourses);
-  const { data: postsByCategory } = useSWR<Record<string, PostItemInterface[]>>(api.postsByCategory, fetchPostsByCategory);
-
-  console.log({courses, postsByCategory});
+  const { data: courses } = useSWR<PostItemInterface[]>(apiCourses);
+  const { data: postsByCategory } = useSWR(apiPosts);
 
   return (
     <Main>
@@ -32,13 +31,19 @@ const Learning: PageWithLayout = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  getPostsByCategory();
-  return Promise.resolve({
+export async function getServerSideProps() {
+  const courses = await fetchCourses(apiCourses);
+  const postsByCategory = await fetchPostsByCategory(apiPosts);
+console.log(courses);
+console.log(postsByCategory);
+  return {
     props: {
-
+      fallback: {
+        [apiCourses]: courses,
+        [apiPosts]: postsByCategory,
+      }
     },
-  });
+  };
 };
 
 Learning.getLayout = HomeLayout;

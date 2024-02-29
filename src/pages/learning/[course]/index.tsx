@@ -3,7 +3,7 @@ import { Main } from "@/components/layout/Main";
 import { fetchCourseDetail } from "@/pages/api/courses/[course]";
 import { fetchPostsByCategory } from "@/pages/api/posts/category";
 import { PageWithLayout } from "@/types/base";
-import { api } from "@/utils/api";
+import { api, getApiUrl } from "@/utils/api";
 import { GetServerSideProps } from "next";
 import useSWR from "swr";
 
@@ -12,14 +12,18 @@ export interface CourseProps {
   course: string;
 }
 
+const getApiCourseDetail = (course: string) => getApiUrl(`${api.courseDetail}/${course}`);
+const apiPosts = getApiUrl(api.postsByCategory);
+
 const Course: PageWithLayout<CourseProps> = (props) => {
   const { url, course } = props;
+  const apiCourseDetail = getApiCourseDetail(course);
 
-  const { data: courseDetail } = useSWR(api.courseDetail + course, fetchCourseDetail);
-  const { data } = useSWR(api.postsByCategory, fetchPostsByCategory);
+  const { data: courseDetail } = useSWR(apiCourseDetail);
+  const { data } = useSWR(apiPosts);
 
   const coursePosts = (data || {})[url] || [];
-console.log({courseDetail, data})
+
   return (
     <Main>
       <CategoryPost
@@ -30,13 +34,20 @@ console.log({courseDetail, data})
   );
 };
 
-export const getServerSideProps: GetServerSideProps = (ctx) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { query, resolvedUrl } = ctx;
+  const apiCourseDetail = getApiCourseDetail((query?.course || '') as string);
+  const courseDetail = await fetchCourseDetail(apiCourseDetail);
+  const posts = await fetchPostsByCategory(apiPosts);
 
   return Promise.resolve({
     props: {
       ...query,
       url: resolvedUrl,
+      fallback: {
+        [apiCourseDetail]: courseDetail,
+        [apiPosts]: posts,
+      },
     }
   });
 };
