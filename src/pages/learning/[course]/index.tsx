@@ -1,24 +1,29 @@
-import { learningMenus } from "@/blog/learning/menus";
-import { posts } from "@/blog/learning/posts";
 import { CategoryPost } from "@/components/layout/CategoryPost";
 import { Main } from "@/components/layout/Main";
+import { fetchCourseDetail } from "@/pages/api/courses/[course]";
+import { fetchPostsByCategory } from "@/pages/api/posts/category";
 import { PageWithLayout } from "@/types/base";
+import { api } from "@/utils/api";
 import { GetServerSideProps } from "next";
+import useSWR from "swr";
 
 export interface CourseProps {
-  pathname: string;
+  url: string;
+  course: string;
 }
 
 const Course: PageWithLayout<CourseProps> = (props) => {
-  const { pathname } = props;
+  const { url, course } = props;
 
-  const cate = learningMenus.find(c => c.url === pathname);
-  const coursePosts = posts[pathname];
+  const { data: courseDetail } = useSWR(api.courseDetail + course, fetchCourseDetail);
+  const { data } = useSWR(api.postsByCategory, fetchPostsByCategory);
 
+  const coursePosts = (data || {})[url] || [];
+console.log({courseDetail, data})
   return (
     <Main>
       <CategoryPost
-        title={cate?.name}
+        title={courseDetail?.name}
         posts={coursePosts ?? []}
       />
     </Main>
@@ -26,13 +31,12 @@ const Course: PageWithLayout<CourseProps> = (props) => {
 };
 
 export const getServerSideProps: GetServerSideProps = (ctx) => {
-  const { query, req, resolvedUrl } = ctx;
-  console.log(req)
+  const { query, resolvedUrl } = ctx;
 
   return Promise.resolve({
     props: {
       ...query,
-      pathname: resolvedUrl,
+      url: resolvedUrl,
     }
   });
 };

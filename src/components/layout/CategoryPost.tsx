@@ -17,10 +17,11 @@ export const CategoryPost = forwardRef<HTMLDivElement, CategoryPostProps>(
 
     const isLink = titleURL !== undefined;
     const TitleComponent = isLink ? Link : 'div';
+
     const titleProps = Object.assign(
       { className: "CategoryPost-title" },
       isLink ? { href: titleURL } : {},
-    )
+    );
 
     return (
       <div ref={ref} className={cx("CategoryPost-root", className)}>
@@ -28,8 +29,8 @@ export const CategoryPost = forwardRef<HTMLDivElement, CategoryPostProps>(
           <TitleComponent {...titleProps as any}>{title}</TitleComponent>
         ) : null}
         <div className="CategoryPost-body">
-          {posts.map(learning => (
-            <PostItem key={learning.url} item={learning} />
+          {posts.map(post => (
+            <PostItem key={post.url} item={post} />
           ))};
         </div>
       </div>

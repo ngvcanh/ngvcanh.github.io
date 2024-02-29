@@ -1,35 +1,30 @@
-import { GetServerSideProps, Metadata } from "next";
-import { PageWithLayout } from "@/types/base";
+import { PageWithLayout, PostItemInterface } from "@/types/base";
+import { fetchPostsByCategory } from "@/pages/api/posts/category";
+import { fetchCourses } from "@/pages/api/courses";
+import { api } from "@/utils/api";
 import { Main } from "@/components/layout/Main";
 import { HomeLayout } from "@/components/containers/HomeLayout";
 import { CategoryPost } from "@/components/layout/CategoryPost";
-import { posts } from "@/blog/learning/posts";
-import { learningMenus } from "@/blog/learning/menus";
+import useSWR from "swr";
+import { GetServerSideProps } from "next";
+import { getPostsByCategory } from "@/utils/getPostsByCategory";
 
-export const metadata: Metadata = {
-  title: "My post",
-  keywords: ["post"],
-  description: "this is content of description's post"
-};
+const Learning: PageWithLayout = () => {
+  const { data: courses } = useSWR<PostItemInterface[]>(api.courses, fetchCourses);
+  const { data: postsByCategory } = useSWR<Record<string, PostItemInterface[]>>(api.postsByCategory, fetchPostsByCategory);
 
-export interface PostProps {
-  course: string;
-  post: string;
-}
+  console.log({courses, postsByCategory});
 
-const categories = Object.keys(posts);
-
-const Learning: PageWithLayout<PostProps> = (props) => {
   return (
     <Main>
-      {categories.map((category) => {
-        const cate = learningMenus.find(c => c.url === category);
+      {courses?.map((course) => {
+        const posts = postsByCategory?.[course.url] ?? [];
         return (
           <CategoryPost
-            key={category}
-            title={cate?.name}
-            titleURL={category}
-            posts={posts[category]}
+            key={course.url}
+            title={course.name}
+            titleURL={course.url}
+            posts={posts}
           />
         );
       })}
@@ -37,12 +32,14 @@ const Learning: PageWithLayout<PostProps> = (props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = (ctx) => Promise.resolve({
-  props: {
-    ...ctx.query,
-    navbar: [],
-  }
-});
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  getPostsByCategory();
+  return Promise.resolve({
+    props: {
+
+    },
+  });
+};
 
 Learning.getLayout = HomeLayout;
 export default Learning;

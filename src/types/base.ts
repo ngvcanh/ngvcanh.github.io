@@ -38,6 +38,7 @@ export interface PostItemInterface {
   keywords?: string;
   image?: string;
   category?: string;
+  content?: string;
 }
 
 export type MDXComponent = (props: MDXProps) => JSX.Element;

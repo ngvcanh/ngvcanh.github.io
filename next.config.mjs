@@ -13,7 +13,19 @@ const withMDX = nextMDX({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  swcMinify: true,
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
+  // webpack5: true,
+  // future: {
+  //   webpack5: true
+  // },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = { fs: false };
+    }
+
+    return config;
+  },
 };
 
 export default withMDX(nextConfig);
