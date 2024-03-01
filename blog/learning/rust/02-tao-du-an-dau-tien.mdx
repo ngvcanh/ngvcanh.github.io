@@ -1,0 +1,43 @@
+---
+title: Tạo dự án RUST đầu tiên với Cargo
+name: 02. Tạo dự án RUST đầu tiên với Cargo
+image: /images/rust.svg
+keywords: rust,rust progrmming,rust language,code rust,rust macos,rust windows
+description: Cách tạo dự án RUST đầu tiên với Cargo, Các cách để chạy được dự án RUST
+url: /learning/rust/02-tao-du-an-dau-tien
+source: https://doc.rust-lang.org/edition-guide/editions/creating-a-new-project.html
+---
+
+# Bài 02. Tạo dự án RUST đầu tiên với Cargo
+
+## 1. Tạo dự án RUST
+
+Đầu tiên tạo một thư mục để chứa mã nguồn dự án RUST. Ví du `my-first-rust`
+
+```sh
+mkdir my-first-rust
+cd my-first-rust
+```
+
+Chạy lệnh `cargo init` để tạo dự án mới. Sau khi dự án được khởi tạo thành công, ở màn hình Terminal sẽ xuất ra dòng chữ:
+
+```sh
+     Created binary (application) package
+```
+
+Cấu trúc thư mục dự án mới được tạo bên trong thư mục `my-first-rust` sẽ có như sau:
+
+```
+my-first-rust
+    Cargo.toml
+    src
+        main.ts
+```
+
+Trong đó:
+
+- Tập tin **Cargo.toml**: Chứa các thông tin của dự án như: tên (name), phiên bản (verison), ấn bản (edition); và các gói phụ thuộc của dự án.
+- Thư mục **src**: Là thư mục chưa toàn bộ mã nguồn của dự án sẽ được thêm vào.
+
+Việc sử dụng lệnh `cargo init` để khởi tạo dự án mặc định sẽ lấy tên thưc mục hiện tại làm tên của dự án. 
+Phiên bản của dự án sẽ được gán mặc định là `0.1.0`. Cargo sẽ tìm ấn bản (edition) mới nhất cho dự án.
