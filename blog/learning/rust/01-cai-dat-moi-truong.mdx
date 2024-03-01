@@ -1,0 +1,63 @@
+---
+title: Cài đặt môi trường làm việc cho RUST
+name: 01. Cài đặt môi trường làm việc cho RUST 
+image: /images/rust.svg
+keywords: rust,rust progrmming,rust language,code rust,rust macos,rust windows
+description: Cài đặt môi trường để lập trình với ngôn ngữ Rust trên MacOS hoặc Windows
+url: /learning/rust/01-cai-dat-moi-truong
+---
+
+# Bài 01. Cài đặt môi trường làm việc cho RUST
+
+## 1. Cài đặt
+
+Truy cập vào trang web https://rustup.rs
+
+Copy dòng lệnh:
+
+```sh
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+Mở `terminal` trên máy tính và chạy dòng lệnh đã copy
+
+Ở màn hình Terminal sẽ hiển thị3 lựa chọn:
+
+```sh
+1) Proceed with installation (default)
+2) Customize installation
+3) Cancel installation
+>
+```
+
+Nhập `1` và nhấn `Enter` hoặc `Return` để tiếp tục cài đặt.
+
+Sau khi cài đặt xong cần khởi động lại Terminal để các biến môi trường `PATH` được tải lại. Các biến này được cài đặt trong `$HOME/.cargo/bin`.
+
+Hoặc chạy lệnh sau để Terminal load mới vào viến môi trường `PATH` và tiếp tục:
+
+```sh
+source "$HOME/.cargo/env"
+```
+
+Để kiểm tra việc cài đặt Rust đã thành công hay chưa, tại Terminal gõ lệnh sau để kiểm tra:
+
+```
+rustc -V
+```
+
+Nếu việc cài đặt thành công thì ở màn hình Terminal sẽ xuất ra phiên bản của Rust đã được cài đặt trên máy tính. Ví dụ:
+
+```sh
+rustc 1.76.0 (07dca489a 2024-02-04)
+```
+
+Trong trường hợp gõ lệnh `rustc -v` ở màn hình Terminal mà cho ra kết quả như sau:
+
+```sh
+error: no input filename given
+```
+
+Điều này là do cách viết tắt của `--version` là `-V` không phải `-v` nên câu lệnh kiểm tra phiên bản đúng sẽ là `rustc -V`.
+
+Ngoài ra kiểm ra phiên bản của `rustup` và `cargo` lần lượt là `rustup --V`, `cargo --V`.

@@ -183,18 +183,60 @@
     @apply w-full text-white tracking-wide text-sm leading-5;
 
     & h1{
-      @apply font-semibold text-xl my-2 border-b border-slate-700 py-3;
-    }
-    & p {
-      @apply my-2;
+      @apply
+        font-semibold
+        text-xl
+        my-2
+        border-b
+        border-slate-700
+        py-3
+        bg-slate-800
+        mx-[calc(-1*var(--app-root-padding))]
+        px-[var(--app-root-padding)]
+        mb-8
+        tracking-wider;
     }
 
-    & code.hljs {
-      @apply rounded-lg;
+    & h2 {
+      @apply font-semibold text-lg tracking-wider border-b border-slate-700 py-3 mb-6;
+    }
+
+    & p {
+      @apply my-3;
     }
 
     & code:not(.hljs) {
       @apply text-[13px] inline-block bg-slate-700 py-[2px] px-1 rounded text-pink-500;
+    }
+
+    & pre {
+      @apply
+        my-4
+        relative
+        after:absolute
+        after:w-10
+        after:h-6
+        after:rounded
+        after:bg-slate-600
+        after:right-0
+        after:content-['Copy']
+        after:text-xs
+        after:flex
+        after:items-center
+        after:justify-center
+        after:top-0
+        after:opacity-0
+        after:cursor-pointer
+        hover:after:opacity-100
+      ;
+    }
+
+    & pre code {
+      @apply rounded-lg w-full text-gray-100;
+    }
+
+    & pre code:not(.hljs) {
+      @apply p-4 text-[13px] text-white leading-5 bg-[#0d1117];
     }
 
     & .contains-task-list {
