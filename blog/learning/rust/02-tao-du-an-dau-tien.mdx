@@ -15,8 +15,8 @@ source: https://doc.rust-lang.org/edition-guide/editions/creating-a-new-project.
 Đầu tiên tạo một thư mục để chứa mã nguồn dự án RUST. Ví du `my-first-rust`
 
 ```sh
-mkdir my-first-rust
-cd my-first-rust
+$ mkdir my-first-rust
+$ cd my-first-rust
 ```
 
 Chạy lệnh `cargo init` để tạo dự án mới. Sau khi dự án được khởi tạo thành công, ở màn hình Terminal sẽ xuất ra dòng chữ:
@@ -29,6 +29,7 @@ Cấu trúc thư mục dự án mới được tạo bên trong thư mục `my-f
 
 ```
 my-first-rust
+    .gitignore
     Cargo.toml
     src
         main.ts
@@ -40,4 +41,63 @@ Trong đó:
 - Thư mục **src**: Là thư mục chưa toàn bộ mã nguồn của dự án sẽ được thêm vào.
 
 Việc sử dụng lệnh `cargo init` để khởi tạo dự án mặc định sẽ lấy tên thưc mục hiện tại làm tên của dự án. 
-Phiên bản của dự án sẽ được gán mặc định là `0.1.0`. Cargo sẽ tìm ấn bản (edition) mới nhất cho dự án.
+Phiên bản của dự án sẽ được gán mặc định là `0.1.0`. Cargo sẽ tìm ấn bản (edition) mới nhất cho dự án theo mặc định.
+
+Để có thể chỉ định ấn bản (edition) lúc khởi tạo dự án có thể dùng lệnh sau:
+
+```sh
+$ cargo new --edition <YEAR> <PROJECT_NAME>
+```
+
+Ví dụ:
+
+```sh
+$ cargo new --edition "2021" my-first-rust
+```
+
+Trong trường hợp năm ấn bản không hợp lệ, lệnh `cargo new` sẽ không chấp nhận giá trị và phát ra rảnh báo.
+
+```sh
+$ cargo new --edition "2019" my-first-rust
+error: "2019" isn't a valid value for '--edition <YEAR>'
+        [possible values: 2015, 2018, 2021]
+
+        Did you mean "2018"?
+
+For more information try --help
+```
+
+Giá trị của ấn bản (edition) có thể thay đổi bên trong tập tin `Cargo.toml`.
+
+## 2. Chạy dự án RUST
+
+**CÁCH 1**: Dùng `rustc`
+
+Chạy lệnh:
+
+```sh
+$ rustc src/main.rs
+```
+
+Cách này `rustc` sẽ biên dịch dự án thành một tập tin nhị phân ở thư mục dự án với tên là `main`. 
+Sau đó chạy tập tin này ở Terminal:
+
+```sh
+$ ./main
+Hello, world!
+```
+
+**CÁCH 2**: Dùng `cargo`
+
+Chạy lệnh:
+
+```sh
+$ cargo run
+
+   Compiling my-first-rust v0.1.0 (/Users/user/canhnv/personal/rust/my-first-rust)
+    Finished dev [unoptimized + debuginfo] target(s) in 8.28s
+     Running `target/debug/my-first-rust`
+Hello, world!
+```
+
+Bằng cách này `cargo` sẽ chạy dự án trực tiếp mà không cần phải biên dịch qua tập tin nhị phân.

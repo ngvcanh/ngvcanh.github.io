@@ -180,7 +180,7 @@
   }
 
   .Post-article {
-    @apply w-full text-white tracking-wide text-sm leading-5;
+    @apply w-full text-white tracking-wide text-sm leading-5 max-w-screen-md mx-auto;
 
     & h1{
       @apply
@@ -245,6 +245,14 @@
 
     & .task-list-item {
       @apply py-1;
+    }
+
+    & ul {
+      @apply list-disc pl-4 mb-4;
+    }
+
+    & ul li {
+      @apply my-2;
     }
   }
 }
