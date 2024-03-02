@@ -48,7 +48,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       url: resolvedUrl,
       fallback: {
         [apiPostDetail]: postDetail,
-      }
+      },
+      metadata: {
+        title: `${postDetail.title || postDetail.name} | ngvcanh's blog`,
+        keywords: postDetail.keywords || "",
+        description: postDetail.description || "",
+        asPath: '/'
+      },
     }
   };
 };

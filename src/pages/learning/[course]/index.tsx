@@ -48,6 +48,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         [apiCourseDetail]: courseDetail,
         [apiPosts]: posts,
       },
+      metadata: {
+        title: `${courseDetail.title || courseDetail.name} | ngvcanh's blog`,
+        keywords: courseDetail.keywords || "",
+        description: courseDetail.description || "",
+        asPath: '/'
+      },
     }
   });
 };

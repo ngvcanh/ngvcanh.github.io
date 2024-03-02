@@ -180,7 +180,7 @@
   }
 
   .Post-article {
-    @apply w-full text-white tracking-wide text-sm leading-5 max-w-screen-md mx-auto;
+    @apply w-full text-white tracking-wide text-sm leading-5 font-thin max-w-screen-md mx-auto;
 
     & h1{
       @apply
@@ -203,6 +203,17 @@
 
     & p {
       @apply my-3;
+    }
+    & a {
+      @apply text-sky-400 font-normal;
+    }
+
+    & h1 a, & h2 a {
+      @apply text-white font-semibold;
+    }
+
+    & strong {
+      @apply font-black;
     }
 
     & code:not(.hljs) {
@@ -232,7 +243,7 @@
     }
 
     & pre code {
-      @apply rounded-lg w-full text-gray-100;
+      @apply rounded-lg w-full text-gray-100 text-[13px];
     }
 
     & pre code:not(.hljs) {

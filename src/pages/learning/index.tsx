@@ -34,14 +34,19 @@ const Learning: PageWithLayout = () => {
 export async function getServerSideProps() {
   const courses = await fetchCourses(apiCourses);
   const postsByCategory = await fetchPostsByCategory(apiPosts);
-console.log(courses);
-console.log(postsByCategory);
+
   return {
     props: {
       fallback: {
         [apiCourses]: courses,
         [apiPosts]: postsByCategory,
-      }
+      },
+      metadata: {
+        title: "Các khoá học lập trình | ngvcanh's blog",
+        keywords: "lập trình,rust,react,typescript,html-css,php,docker,programming,code,coder,trí tuệ nhân tạo,ai assistant,best practice",
+        description: "Blog tài liệu học lập trình, tìm kiếm công cụ hỗ trợ trí tuệ nhân tạo (AI)",
+        asPath: '/'
+      },
     },
   };
 };
