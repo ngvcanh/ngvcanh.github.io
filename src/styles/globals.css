@@ -10,7 +10,8 @@
   --app-bg-body-rgb: 21, 34, 46;
   --app-base-size: 1rem;
   --app-root-header-height: 3rem;
-  --app-root-header-bg: #101e2a;
+  --app-root-header-bg-hex: #101e2a;
+  --app-root-header-bg-rgb: 16, 30, 42;
   --app-root-header-index: 100;
   --app-root-sidebar-width: 15rem;
   --app-root-sidebar-index: 99;
@@ -65,7 +66,8 @@
       border-b
       border-slate-800
       z-[var(--app-root-header-index)]
-      bg-[var(--app-root-header-bg)]
+      bg-[rgba(var(--app-root-header-bg-rgb),0.01)]
+      backdrop-blur
       h-[var(--app-root-header-height)];
   }
 
