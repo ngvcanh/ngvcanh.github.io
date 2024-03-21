@@ -219,7 +219,7 @@
     }
 
     & code:not(.hljs) {
-      @apply text-[13px] inline-block bg-slate-700 py-[2px] px-1 rounded text-pink-500;
+      @apply text-[13px] inline-block bg-slate-700 py-[2px] px-1 rounded text-pink-500 my-1;
     }
 
     & pre {
@@ -242,6 +242,10 @@
         after:cursor-pointer
         hover:after:opacity-100
       ;
+    }
+
+    & blockquote {
+      @apply bg-gray-500 px-4 py-1 border-l-4;
     }
 
     & pre code {

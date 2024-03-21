@@ -4,8 +4,8 @@ import { fetchCourses } from "@/pages/api/courses";
 import { api, getApiUrl } from "@/utils/api";
 import { Main } from "@/components/layout/Main";
 import { HomeLayout } from "@/components/containers/HomeLayout";
-import useSWR from "swr";
 import { CategoryPost } from "@/components/layout/CategoryPost";
+import useSWR from "swr";
 
 const apiCourses = getApiUrl(api.courses);
 const apiPosts = getApiUrl(api.postsByCategory);

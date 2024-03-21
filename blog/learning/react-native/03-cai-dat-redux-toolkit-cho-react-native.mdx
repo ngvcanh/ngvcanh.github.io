@@ -1,0 +1,124 @@
+---
+title: Cài đặt Redux Toolkit cho React Native
+name: 03. Cài đặt Redux cho React Native
+image: /images/react.svg
+keywords: react native, redux, react-redux, style react native, lap trinh di dong, ung dung di dong, lập trình di động, ứng dụng di động, mobile app
+description: Cài đặt Redux cho React Native để quản lý dữ liệu dự án dễ dàng hơn.
+url: /learning/react-native/03-cai-dat-redux-toolkit-cho-react-native
+source: 
+---
+
+# Bài 03. Cài đặt Redux cho React Native
+
+## Cài đặt Redux Toolkit
+
+```sh
+yarn add @reduxjs/toolkit
+```
+
+## Tạo reduce với `createSlice`
+
+Trong ví dụ này sẽ định nghĩa một `reduce` là `Counter` với 2 `action` là tăng và giảm giá trị của nó.
+
+Định nghĩa kiểu dữ liệu cho Counter
+
+```typescript
+// ./src/store/counter/slice.ts
+
+interface CounterState {
+  value: number;
+}
+```
+
+Tạo một bộ giá trị ban đầu cho `Counter`.
+
+```typescript
+// ./src/store/counter/slice.ts
+
+const initialState: CounterState = {
+  value: 0,
+};
+```
+
+Tạo một `Slice` với tên là `counter` với bộ giá trị ban đầu đã định nghĩa thông qua hàm 
+`createSlice` được `@reduxjs/toolkit` hỗ trợ.
+
+```typescript
+// ./src/store/counter/slice.ts
+
+import { createSlice } from "@reduxjs/toolkit";
+
+const counterSlice = createSlice({
+  name: "counter",
+  initialState,
+  reducers: {},
+});
+```
+
+Với thuộc tính `reducers` trong tham số truyền vào cho hàm `createSlice` đang để giá trị là 
+một đối tượng rỗng. Thuộc tính này là nơi định nghĩa các `action` và logic xử tính cho các 
+action đó bằng cách định nghĩa mỗi action là một hàm hoặc một đối tượng có 2 thuộc tính là
+`reducer` và `prepare`.
+
+Tiếp theo sẽ định nghĩa 2 action tăng (`increment`) và giảm (`decrement`) cho nó.
+
+```typescript
+// ./src/store/counter/slice.ts
+
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+const counterSlice = createSlice({
+  name: "counter",
+  initialState,
+  reducer: {
+    increment(state, action: PayloadAction) {
+      state.value = state.value + 1;
+    },
+    decrement(state, action: PayloadAction) {
+      state.value = state.value - 1;
+    },
+  },
+});
+```
+
+Từ đối tượng `counterSlice` ta có được 2 thuộc tính `reducer` và `actions`, `export` chúng 
+để sử dụng.
+
+```typescript
+// ./src/store/counter/slice.ts
+
+export const counterReducer = counterSlice.reducer;
+export const counterActions = counterSlice.actions;
+```
+
+Cuối cùng có được một tập tin như sau:
+
+```typescript
+// ./src/store/counter/slice.ts
+
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+interface CounterState {
+  value: number;
+}
+
+const initialState: CounterState = {
+  value: 0,
+};
+
+const counterSlice = createSlice({
+  name: "counter",
+  initialState,
+  reducer: {
+    increment(state, action: PayloadAction) {
+      state.value = state.value + 1;
+    },
+    decrement(state, action: PayloadAction) {
+      state.value = state.value - 1;
+    },
+  },
+});
+
+export const counterReducer = counterSlice.reducer;
+export const counterActions = counterSlice.actions;
+```

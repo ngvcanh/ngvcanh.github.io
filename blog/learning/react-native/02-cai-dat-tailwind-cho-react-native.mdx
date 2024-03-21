@@ -1,0 +1,141 @@
+---
+title: Cài đặt Tailwind cho React Native
+name: 02. Cài đặt Tailwind cho React Native
+image: /images/react.svg
+keywords: react native, tailwind, style react native, lap trinh di dong, ung dung di dong, lập trình di động, ứng dụng di động, mobile app
+description: Cài đặt TailwindCSS cho React Native để định kiểu dễ dàng hơn.
+url: /learning/react-native/02-cai-dat-tailwind-cho-react-native
+source: 
+---
+
+# Bài 02. Cài đặt Tailwind cho React Native
+
+## 1. Cài đặt và cấu hình
+
+Cài đặt các gói (packages) sau:
+
+```sh
+yarn add nativewind
+yarn add --dev tailwindcss@3.3.2
+```
+
+Khởi tạo cấu hình tailwind cho dự án:
+
+```sh
+npx tailwindcss init
+```
+
+Sau khi `tailwind` khởi tạo xong ở màn hình `Terminal` sẽ xuất ra kết quả:
+
+```
+Created Tailwind CSS config file: tailwind.config.js
+```
+
+Lúc này trong thư mục của dự án, một tập tin mới tên `tailwind.config.js` được tạo ra với nội dung như sau:
+
+```javascript
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
+
+`Tailwind` sẽ tìm đọc các tập tin được chỉ định ở mảng `content` và biên dịch sẵn `StyleSheet` thông qua 
+thuộc tính (Attribute) `className`, vì vậy cần chỉ định các tập tin ở mảng `content`.
+
+Ví dụ: cấu trúc thư mục dự án bao gồm 2 thư mục là `packages` và `apps` để chứa các gói được phát triển và 
+các ứng dụng dùng chung mã nguồn và đặt trong thư mục `src`. Vì vậy tập tin `tailwind.config.js` sẽ có nội dung như sau:
+
+```javascript
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./src/packages/**/*.{js,jsx,ts,tsx}",
+    "./src/apps/**/*.{js,jsx,ts,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
+
+Tiếp theo, thêm plugin `nativewind/babel` vào phần `plugins` của tập tin `babel.config.js`.
+
+```javascript
+module.exports = {
+  presets: ['module:@react-native/babel-preset'],
+  plugins: ["nativewind/babel"], // <-------------------- Thêm dòng này
+};
+```
+
+Sau khi thêm xong, nếu dự án đang chạy với lệnh `start` thì hãy tắt màn hình Terminal `metro` đi.
+
+Đối với **iOS** hãy chạy lệnh `npx pod-install` để cập nhật lại các gói phụ thuộc nếu cần thiết.
+Sau đó chạy lại lệnh `yarn ios` để chạy lại dự án.
+
+## 2. Định nghĩa kiểu với TypeScript
+
+`Tailwind` biên dịch các kiểu `StyleSheet` thông qua thuộc tính `className` của thành phần 
+(component), trong khi các components có sẵn của **React Native** thì không có thuộc tính này.
+Do đó **Tailwind** đã định nghĩa sẵn kiểu có thuộc tính `className` trên phạm vi `global`
+cho các component sẵn có của **React Native**.
+
+Để áp dụng các kiểu này cho dự án, hãy tạo một một tập tin `*.d.ts` (chẳng hạn `tailwind-type.d.ts`)
+và nhập nội dung như sau:
+
+```typescript
+/// <reference types="nativewind/types" />
+```
+
+Điều này sẽ giúp cho các trình biên dịch hiểu được các kiểu của **React Native** có sẵn thuộc 
+tính `className`.
+
+>
+> **CHÚ Ý**
+>
+> Khi đặt tên tập tin tránh những điều sau:
+>
+> - Không đặt tên tập tin là `nativewind.d.ts` vì tên `nativewind` trùng với tên package đã được cài đặt
+>
+> - Tránh cùng tên với một tập tin hoặc thư mục trong cùng một thư mục, ví dụ như `apps.d.ts` 
+> khi một  thư mục `/apps` đã tồn tại.
+>
+> - Tránh trùng tên với một thư mục trong `node_modules`, ví dụ: `react.d.ts`.
+>
+> Nếu những điều trên xảy ra thì **TypeScript** sẽ không đọc tập tin kiểu này. 
+> [Xem thêm](https://www.nativewind.dev/getting-started/typescript)
+
+## 3. Thử nghiệm
+
+Sau khi hoàn tất quá trình cài đặt và cấu hình, hãy thay đổi nội dung của tập tin `App.tsx` để xem kết quả. 
+Đảm bảo đường dẫn đến tập tin `App.tsx` phù hợp với một trong những đường dẫn đã cấu hình ở thuộc tính
+`content` ở tập tin `tailwind.config.js`
+
+```tsx
+import React from 'react';
+import {SafeAreaView, ScrollView, StatusBar, Text, View} from 'react-native';
+
+function App(): React.JSX.Element {
+  return (
+    <SafeAreaView>
+      <StatusBar />
+      <ScrollView>
+        <View className="flex-1 justify-center items-center">
+          <Text className="text-indigo-600 text-xl">React native</Text>
+          <Text className="font-bold text-xl">with</Text>
+          <Text className="text-red-500 text-xl">Tailwind</Text>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+export default App;
+```
+
+![Demo ios](/images/blog/react-native-02-0.png)

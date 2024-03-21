@@ -1,0 +1,47 @@
+---
+title: Tạo mới dự án với React Native
+name: 01. Tạo mới dự án với React Native
+image: /images/react.svg
+keywords: react native, lap trinh di dong, ung dung di dong, lập trình di động, ứng dụng di động, mobile app
+description: Cách tạo mới một dự án lập trình ứng dụng di động với React Native
+url: /learning/react-native/01-tao-moi-du-an-voi-react-native
+source: 
+---
+
+# Bài 01. Tạo mới dự án với React Native
+
+## 1. Khởi tạo dự án
+
+```sh
+npx react-native init <projectname> [--directory <project-folder>]
+```
+
+Ví dụ:
+
+```sh
+npx react-native init myproject --directory react-native-myproject
+```
+
+Với lệnh này `npx` sẽ tạo mới một dự án **React Native** với tên là `myproject`. 
+Dự án này sẽ có mã nguồn nằm bên trong thư mục `react-native-myproject`.
+
+## 2. Khởi chạy dự án
+
+Khi dự án được khởi tạo lần đầu tiên cần chạy các lệnh sau để cập nhật các thư viện cần thiết cho dự án.
+
+### iOS
+
+```sh
+npx pod-install ios
+```
+
+Với lệnh này `npx` sẽ tìm thư mục `ios` (được tạo sẵn theo mã nguồn dự án mới) để tiến hành 
+cài đặt các gói (packages) phụ thuộc quy định sẵn ở tập tin `Podfile`.
+
+Quá trình cài đặt gói `Hermes` mất khá nhiều thời gian.
+
+Sau khi cài đặt các gói phụ thuộc xong thì chạy lệnh sau để chạy dự án:
+
+```sh
+yarn ios
+```
